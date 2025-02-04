@@ -10,7 +10,10 @@ import {
   JoinColumn,
   OneToMany,
   Index,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity('agencies')
 export class Agency {
@@ -29,6 +32,7 @@ export class Agency {
   @Column({ type: 'int', nullable: false })
   level: number;
 
+  @Index('idx_parent_id')
   @ManyToOne(() => Agency, (agency) => agency.children, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'parent_id' })
   parent: Agency;
@@ -45,8 +49,8 @@ export class Agency {
   @Column({ type: 'varchar', length: 255, nullable: true })
   city: string;
 
-  @Column({ name: 'hash_password', type: 'text', nullable: true })
-  hashPassword: string;
+  @Column({ name: 'password', type: 'text', nullable: true })
+  password: string;
 
   @CreateDateColumn({
     type: 'datetime',
@@ -70,4 +74,19 @@ export class Agency {
 
   @OneToMany(() => Cart, (cart) => cart.agency)
   carts: Cart[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  setLevel() {
+    this.level = this.parent ? this.parent.level + 1 : 1;
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPasswordBeforeSave() {
+    if (this.password) {
+      const salt = await bcrypt.genSalt();
+      this.password = await bcrypt.hash(this.password, salt);
+    }
+  }
 }

@@ -14,6 +14,7 @@ import { OrderModule } from './modules/order/order.module';
 import { CartModule } from './modules/cart/cart.module';
 import { ConfigServerModule } from './modules/config/config-server.module';
 import { LoggerModule } from './logger/logger.module';
+import { PostModule } from './modules/post/post.module';
 
 dotenv.config();
 @Module({
@@ -40,6 +41,7 @@ dotenv.config();
     OrderModule,
     CartModule,
     ConfigServerModule,
+    PostModule,
   ],
   controllers: [],
   providers: [],

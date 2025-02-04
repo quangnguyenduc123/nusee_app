@@ -226,6 +226,8 @@ export class ProductController {
     const updatedProductDto = {
       ...updateProductDto,
       ...(imagePaths.length > 0 && { images: imagePaths }),
+      ...(updateProductDto.images &&
+        updateProductDto.images.length === 0 && { images: [] }),
     };
 
     return this.productService.update(id, updatedProductDto);

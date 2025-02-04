@@ -46,5 +46,5 @@ export class UpdateAgencyDto {
 
   @IsOptional()
   @IsString()
-  hashPassword?: string;
+  password?: string;
 }

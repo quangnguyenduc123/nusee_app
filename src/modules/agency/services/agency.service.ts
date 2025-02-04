@@ -38,7 +38,7 @@ export class AgencyService {
       agency.ward = createAgencyDto.ward;
       agency.district = createAgencyDto.district;
       agency.city = createAgencyDto.city;
-      agency.hashPassword = createAgencyDto.hashPassword || '';
+      agency.password = createAgencyDto.password;
 
       if (createAgencyDto.parent_id) {
         const parentAgency = await manager.findOneBy(Agency, {
@@ -59,7 +59,7 @@ export class AgencyService {
         await manager.save(AgencyRelationship, relationship);
       }
 
-      delete savedAgency.hashPassword;
+      delete savedAgency.password;
       return savedAgency;
     });
   }
@@ -67,7 +67,7 @@ export class AgencyService {
   async findAll(): Promise<Agency[]> {
     const agencies = await this.agencyRepository.find();
     return agencies.map((agency) => {
-      delete agency.hashPassword;
+      delete agency.password;
       return agency;
     });
   }
@@ -76,7 +76,7 @@ export class AgencyService {
     const agency = await this.agencyRepository.findOne({
       where: { id },
     });
-    delete agency.hashPassword;
+    delete agency.password;
 
     return agency;
   }

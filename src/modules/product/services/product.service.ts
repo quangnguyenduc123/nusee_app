@@ -81,6 +81,12 @@ export class ProductService {
       product.category = category;
     }
 
+    if (updateProductDto.images && updateProductDto.images.length === 0) {
+      product.images = [];
+    } else if (updateProductDto.images) {
+      product.images = updateProductDto.images;
+    }
+
     Object.assign(product, updateProductDto);
     return this.productRepository.save(product);
   }

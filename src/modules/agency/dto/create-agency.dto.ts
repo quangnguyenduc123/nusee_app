@@ -43,5 +43,5 @@ export class CreateAgencyDto {
 
   @IsOptional()
   @IsString()
-  hashPassword?: string;
+  password?: string;
 }

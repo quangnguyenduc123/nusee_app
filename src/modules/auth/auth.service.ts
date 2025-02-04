@@ -31,7 +31,7 @@ export class AuthService {
       const agency = await this.agencyRepository.findOne({
         where: [{ email: username }, { phone: username }],
       });
-      if (agency && (await bcrypt.compare(password, agency.hashPassword))) {
+      if (agency && (await bcrypt.compare(password, agency.password))) {
         return agency;
       }
     }
