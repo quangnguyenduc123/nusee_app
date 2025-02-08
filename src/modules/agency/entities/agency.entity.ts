@@ -1,5 +1,7 @@
 import { Cart } from '../../cart/entities';
 import { Order } from '../../order/entities';
+import { PostEntity } from '../../post/entities/post.entity';
+
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -74,6 +76,9 @@ export class Agency {
 
   @OneToMany(() => Cart, (cart) => cart.agency)
   carts: Cart[];
+
+  @OneToMany(() => PostEntity, (post) => post.agency)
+  posts: PostEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -1,6 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Agency } from 'src/modules/agency/entities';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
-@Entity()
+@Entity('posts')
 export class PostEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,4 +39,7 @@ export class PostEntity {
   })
   updated_at: Date;
 
+  @ManyToOne(() => Agency, (agency) => agency.posts, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'agency_id' })
+  agency: Agency;
 }
